@@ -14,7 +14,12 @@ function Nav(props) {
   const lis = []
   for(let i = 0; i < props.topices.length; i++) {
     let t = props.topices[i]
-    lis.push(<li>{t.title}</li>)
+    lis.push(<li key={t.id}>
+    <a id={t.id} href={'/read/'+t.id} onClick={(event)=> {
+      event.preventDefault();
+      props.onChange(event.target.id)
+    }}>{t.title}</a>
+    </li>)
   }
   return(
     <ol>
@@ -32,6 +37,17 @@ function Bottom(props) {
   )
 }
 
+function Btn(props) {
+  return(
+    <div>
+      <button onClick={(event) => {
+        event.preventDefault();
+        props.onChange()
+      }}>{props.name}</button>
+    </div>
+  )
+}
+
 function App() {
   const topices = [
     {id: 1, title: 'one'},
@@ -41,8 +57,13 @@ function App() {
   return(
     <div>
       <Header title="WEB"></Header>
-      <Nav topices={topices}></Nav>
+      <Nav onChange={(id)=> {
+        alert(id)
+      }} topices={topices}></Nav>
       <Bottom title="bot" p="zzzzzzzzzz"></Bottom>
+      <Btn onChange={() => {
+        alert('wow')
+      }} name="button"></Btn>
     </div>
   )
 }
